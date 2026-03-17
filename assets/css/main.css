@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Custom base styles */
+@layer base {
+  body {
+    @apply text-gray-900 antialiased;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+}
