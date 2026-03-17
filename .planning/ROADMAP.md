@@ -9,7 +9,7 @@
 
 - [x] **Phase 1: Foundation** - Working Jekyll site with correct configuration and responsive base
 - [x] **Phase 2: Content** - Homepage with posts, individual post pages, about page, first post published
-- [ ] **Phase 3: Discoverability** - RSS feed, sitemap, SEO meta tags for all pages
+- [x] **Phase 3: Discoverability** - RSS feed, sitemap, SEO meta tags for all pages
 
 ---
 
@@ -74,7 +74,11 @@ Plans:
 3. Every page has a unique title tag and meta description
 4. Blog posts include Open Graph meta tags for proper social sharing previews
 
-**Plans:** TBD (decomposed by /gsd:plan-phase)
+**Plans:** 2 plans
+
+Plans:
+- [x] 03-discoverability-01-PLAN.md — Create SEO include with Open Graph and Twitter tags
+- [x] 03-discoverability-02-PLAN.md — Verify jekyll plugins, add page descriptions
 
 ---
 
@@ -84,7 +88,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-03-17 |
 | 2. Content | 3/3 | Complete | 2026-03-17 |
-| 3. Discoverability | 0/0 | Not started | - |
+| 3. Discoverability | 2/2 | Complete | 2026-03-17 |
 
 ---
 
@@ -102,10 +106,10 @@ Plans:
 | CONT-03 | Phase 2 | Complete |
 | CONT-04 | Phase 2 | Complete |
 | CONT-05 | Phase 2 | Complete |
-| DISC-01 | Phase 3 | Pending |
-| DISC-02 | Phase 3 | Pending |
-| DISC-03 | Phase 3 | Pending |
-| DISC-04 | Phase 3 | Pending |
+| DISC-01 | Phase 3 | Complete |
+| DISC-02 | Phase 3 | Complete |
+| DISC-03 | Phase 3 | Complete |
+| DISC-04 | Phase 3 | Complete |
 
 **Coverage:** 14/14 v1 requirements mapped (100%)
 
