@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **FOUND-01**: Jekyll site renders correctly on GitHub Pages
 - [x] **FOUND-02**: Site uses correct baseurl configuration (no broken local links)
 - [ ] **FOUND-03**: Permalink structure is set and consistent (`/posts/:title/`)
-- [ ] **FOUND-04**: Layout hierarchy works (default.html extended by others)
+- [x] **FOUND-04**: Layout hierarchy works (default.html extended by others)
 - [ ] **FOUND-05**: Responsive design works on mobile devices
 
 ### Content
@@ -70,7 +70,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Pending |
 | CONT-01 | Phase 2 | Pending |
 | CONT-02 | Phase 2 | Pending |
