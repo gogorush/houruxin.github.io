@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include head.html %}
+</head>
+<body class="bg-white text-gray-900 antialiased">
+  <header class="bg-white shadow">
+    {% include header.html %}
+  </header>
+
+  <main class="container max-w-7xl mx-auto px-4 py-8">
+    {{ content }}
+  </main>
+
+  <footer class="bg-gray-50 border-t mt-auto">
+    {% include footer.html %}
+  </footer>
+</body>
+</html>
