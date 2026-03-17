@@ -2,6 +2,7 @@
 layout: default
 title: About
 permalink: /about/
+description: "About Hou Ruxin and this personal blog"
 ---
 
 <div class="about max-w-prose mx-auto">
