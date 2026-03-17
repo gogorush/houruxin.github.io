@@ -7,8 +7,8 @@
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Working Jekyll site with correct configuration and responsive base
-- [ ] **Phase 2: Content** - Homepage with posts, individual post pages, about page, first post published
+- [x] **Phase 1: Foundation** - Working Jekyll site with correct configuration and responsive base
+- [x] **Phase 2: Content** - Homepage with posts, individual post pages, about page, first post published
 - [ ] **Phase 3: Discoverability** - RSS feed, sitemap, SEO meta tags for all pages
 
 ---
@@ -32,9 +32,9 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-foundation-01-PLAN.md — Create _config.yml, Gemfile, Tailwind CSS, and includes (head, header, footer)
-- [ ] 01-foundation-02-PLAN.md — Create layout hierarchy (default.html, home.html)
-- [ ] 01-foundation-03-PLAN.md — Create 404.html and update index.html
+- [x] 01-foundation-01-PLAN.md — Create _config.yml, Gemfile, Tailwind CSS, and includes (head, header, footer)
+- [x] 01-foundation-02-PLAN.md — Create layout hierarchy (default.html, home.html)
+- [x] 01-foundation-03-PLAN.md — Create 404.html and update index.html
 
 ---
 
@@ -52,7 +52,12 @@ Plans:
 4. About page exists and is accessible at /about/
 5. At least one blog post is published and accessible
 
-**Plans:** TBD (decomposed by /gsd:plan-phase)
+**Plans:** 3 plans
+
+Plans:
+- [x] 02-content-01-PLAN.md — Create post layout and metadata include
+- [x] 02-content-02-PLAN.md — Update homepage with post loop, create about page
+- [x] 02-content-03-PLAN.md — Publish first blog post
 
 ---
 
@@ -77,8 +82,8 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/3 | Planned | - |
-| 2. Content | 0/0 | Not started | - |
+| 1. Foundation | 3/3 | Complete | 2026-03-17 |
+| 2. Content | 3/3 | Complete | 2026-03-17 |
 | 3. Discoverability | 0/0 | Not started | - |
 
 ---
@@ -87,16 +92,16 @@ Plans:
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Pending |
-| CONT-01 | Phase 2 | Pending |
-| CONT-02 | Phase 2 | Pending |
-| CONT-03 | Phase 2 | Pending |
-| CONT-04 | Phase 2 | Pending |
-| CONT-05 | Phase 2 | Pending |
+| CONT-01 | Phase 2 | Complete |
+| CONT-02 | Phase 2 | Complete |
+| CONT-03 | Phase 2 | Complete |
+| CONT-04 | Phase 2 | Complete |
+| CONT-05 | Phase 2 | Complete |
 | DISC-01 | Phase 3 | Pending |
 | DISC-02 | Phase 3 | Pending |
 | DISC-03 | Phase 3 | Pending |
