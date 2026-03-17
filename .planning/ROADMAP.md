@@ -29,7 +29,12 @@
 4. Site displays correctly on mobile devices (text readable, no horizontal scroll, images fit screen)
 5. Navigation header and footer appear on all pages via layout inheritance
 
-**Plans:** TBD (decomposed by /gsd:plan-phase)
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-foundation-01-PLAN.md — Create _config.yml, Gemfile, Tailwind CSS, and includes (head, header, footer)
+- [ ] 01-foundation-02-PLAN.md — Create layout hierarchy (default.html, home.html)
+- [ ] 01-foundation-03-PLAN.md — Create 404.html and update index.html
 
 ---
 
@@ -72,7 +77,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/0 | Not started | - |
+| 1. Foundation | 0/3 | Planned | - |
 | 2. Content | 0/0 | Not started | - |
 | 3. Discoverability | 0/0 | Not started | - |
 
@@ -113,5 +118,6 @@
 **Deferred to v2:** Search, categories/tags, pagination, dark mode (see REQUIREMENTS.md v2 section)
 
 ---
+
 *Roadmap created: 2026-03-17*
 *Ready for planning: yes*
