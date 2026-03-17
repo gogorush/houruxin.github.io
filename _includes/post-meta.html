@@ -1,0 +1,13 @@
+{% assign words = content | number_of_words %}
+{% assign read_time = words | divided_by: 200 %}
+
+<div class="post-meta text-gray-600 text-sm">
+  <time datetime="{{ page.date | date: '%Y-%m-%d' }}">
+    {{ page.date | date: "%B %d, %Y" }}
+  </time>
+  {% if read_time > 0 %}
+    &bull; {{ read_time }} min read
+  {% else %}
+    &bull; 1 min read
+  {% endif %}
+</div>
