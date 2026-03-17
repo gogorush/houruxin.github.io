@@ -1,0 +1,16 @@
+title: "Hou Ruxin's Blog"
+description: "Personal blog about technology and life"
+url: "https://houruxin.github.io"
+baseurl: ""
+
+# Permalink structure - SET BEFORE FIRST POST
+permalink: /posts/:title/
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Plugins (GitHub Pages supported)
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
