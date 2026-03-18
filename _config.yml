@@ -1,7 +1,7 @@
 title: "Hou Ruxin's Blog"
 description: "Personal blog about technology and life"
-url: "https://houruxin.github.io"
-baseurl: ""
+url: "https://gogorush.github.io"
+baseurl: "/houruxin.github.io"
 
 # Permalink structure - SET BEFORE FIRST POST
 permalink: /posts/:title/
