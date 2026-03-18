@@ -1,33 +1,42 @@
 <header class="header">
   <div class="container">
-    <div class="flex items-center justify-between py-4">
-      <a href="{{ '/' | relative_url }}" class="header-logo group flex items-center gap-2">
-        <span class="text-2xl">✦</span>
+    <div class="flex items-center justify-between py-3">
+      <a href="{{ '/' | relative_url }}" class="header-logo group">
+        <span class="prompt">&gt;</span>
         <span>{{ site.title }}</span>
+        <span class="text-gray-500">.io</span>
       </a>
 
       <nav class="header-nav hidden md:flex">
-        <a href="{{ '/' | relative_url }}">Home</a>
-        <a href="{{ '/about' | relative_url }}">About</a>
+        <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">
+          <span class="text-gray-500">./</span>home
+        </a>
+        <a href="{{ '/about' | relative_url }}" class="{% if page.url contains '/about' %}active{% endif %}">
+          <span class="text-gray-500">./</span>about
+        </a>
       </nav>
 
       <!-- Mobile menu button -->
       <button
-        class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+        class="md:hidden menu-btn"
         aria-label="Toggle menu"
         onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden pb-4">
-      <nav class="flex flex-col gap-2">
-        <a href="{{ '/' | relative_url }}" class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">Home</a>
-        <a href="{{ '/about' | relative_url }}" class="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">About</a>
+    <div id="mobile-menu" class="hidden mobile-menu">
+      <nav class="flex flex-col gap-1">
+        <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">
+          <span class="text-gray-500">./</span>home
+        </a>
+        <a href="{{ '/about' | relative_url }}" class="{% if page.url contains '/about' %}active{% endif %}">
+          <span class="text-gray-500">./</span>about
+        </a>
       </nav>
     </div>
   </div>

@@ -3,22 +3,18 @@
 <head>
   {% include head.html %}
 </head>
-<body class="bg-white text-gray-900 antialiased flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen">
   <div class="scroll-progress" id="scroll-progress"></div>
 
   <a href="#main-content" class="skip-link">Skip to content</a>
 
-  <header class="bg-white shadow">
-    {% include header.html %}
-  </header>
+  {% include header.html %}
 
-  <main id="main-content" class="container max-w-7xl mx-auto px-4 py-8 flex-grow">
+  <main id="main-content" class="container max-w-5xl mx-auto px-5 py-8 flex-grow">
     {{ content }}
   </main>
 
-  <footer class="bg-gray-50 border-t mt-auto">
-    {% include footer.html %}
-  </footer>
+  {% include footer.html %}
 
   <script>
     // Scroll progress indicator
