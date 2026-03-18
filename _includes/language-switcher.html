@@ -96,8 +96,9 @@
 
       if (!toggle || !dropdown) return;
 
-      // Update active state based on current page language
-      var currentLang = document.documentElement.lang || 'en';
+      // Determine current language from page lang or URL
+      var currentLang = getCurrentLang();
+
       if (currentDisplay) {
         currentDisplay.textContent = currentLang.toUpperCase();
       }
@@ -136,6 +137,69 @@
       }
     }
 
+    function getCurrentLang() {
+      // Check page lang attribute first
+      var htmlLang = document.documentElement.lang || 'en';
+      if (htmlLang !== 'en' && htmlLang !== 'zh') {
+        htmlLang = 'en';
+      }
+
+      // Check if we're on Chinese homepage
+      var path = window.location.pathname;
+      if (path.indexOf('/index.zh.html') !== -1 || path.indexOf('index.zh') !== -1) {
+        return 'zh';
+      }
+
+      // Check if we're on a Chinese post
+      if (path.indexOf('.zh/') !== -1 || path.indexOf('.zh.html') !== -1) {
+        return 'zh';
+      }
+
+      return htmlLang;
+    }
+
+    function switchLanguage(lang) {
+      // Store preference
+      localStorage.setItem('preferred_lang', lang);
+
+      // Get current language
+      var currentLang = getCurrentLang();
+
+      // Already on target language
+      if (lang === currentLang) {
+        var dropdown = document.getElementById('lang-dropdown');
+        if (dropdown) dropdown.classList.add('hidden');
+        return;
+      }
+
+      var currentPath = window.location.pathname;
+      var newPath = currentPath;
+
+      // Handle homepage: / or /index.html <-> /index.zh.html
+      if (currentPath === '/' || currentPath.indexOf('/index.html') !== -1 || currentPath.indexOf('/index.en.html') !== -1) {
+        if (lang === 'zh') {
+          newPath = '/index.zh.html';
+        }
+      } else if (currentPath.indexOf('/index.zh.html') !== -1) {
+        if (lang === 'en') {
+          newPath = '/';
+        }
+      }
+      // Handle post URLs: /posts/welcome.en/ -> /posts/welcome.zh/
+      else if (currentPath.indexOf('/posts/') !== -1) {
+        if (currentLang === 'en') {
+          newPath = currentPath.replace('.en/', '.zh/');
+        } else {
+          newPath = currentPath.replace('.zh/', '.en/');
+        }
+      }
+
+      // Navigate to new page
+      if (newPath !== currentPath) {
+        window.location.href = newPath;
+      }
+    }
+
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initLangSwitcher);
@@ -143,36 +207,4 @@
       initLangSwitcher();
     }
   })();
-
-  function switchLanguage(lang) {
-    // Store preference
-    localStorage.setItem('preferred_lang', lang);
-
-    // Get current page language
-    var currentLang = document.documentElement.lang || 'en';
-
-    // Already on target language
-    if (lang === currentLang) {
-      var dropdown = document.getElementById('lang-dropdown');
-      if (dropdown) dropdown.classList.add('hidden');
-      return;
-    }
-
-    var currentPath = window.location.pathname;
-
-    // Handle post URLs: /posts/welcome.en/ -> /posts/welcome.zh/
-    if (currentPath.indexOf('/posts/') !== -1) {
-      var newPath = currentPath;
-      if (currentLang === 'en') {
-        newPath = currentPath.replace('.en/', '.zh/');
-      } else {
-        newPath = currentPath.replace('.zh/', '.en/');
-      }
-      // Navigate to translated page
-      window.location.href = newPath;
-    } else {
-      // For non-post pages (homepage, about), just reload
-      window.location.reload();
-    }
-  }
 </script>

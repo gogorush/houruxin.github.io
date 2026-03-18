@@ -1,0 +1,133 @@
+---
+layout: default
+title: Welcome
+description: "Personal blog about technology and life"
+lang: en
+---
+
+{%- include i18n.html -%}
+
+<div class="hero fade-in">
+  <div class="hero-terminal">
+    <span class="prompt">➜</span>
+    <span>~</span>
+    <span class="text-gray-500">{{ t.hero.initializing }}</span>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="text-gradient">Hou Ruxin's Blog</span>
+  </h1>
+
+  <p class="hero-description">
+    <span class="text-gray-500">const</span> <span class="text-blue-400">thoughts</span> = [
+    <span class="text-green-400">'technology'</span>, <span class="text-green-400">'life'</span>, <span class="text-green-400">'everything in between'</span> ];
+  </p>
+
+  <a href="#posts" class="hero-cta">
+    <span>{{ t.hero.view_posts }}</span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </a>
+</div>
+
+<div class="section-divider">
+  <span class="text-gray-500">// {{ t.hero.latest_posts | downcase }}</span>
+</div>
+
+<section id="posts" class="pb-16">
+  <h2 class="section-heading">{{ t.hero.latest_posts }}</h2>
+
+  {% if site.posts.size > 0 %}
+    <div class="grid gap-6 md:grid-cols-2">
+      {%- comment -%}
+        Filter posts: show only one language version per post (by ref)
+        Prefer the user's language preference, fallback to English
+      {%- endcomment -%}
+      {%- assign user_lang = 'en' -%}
+      {%- assign seen_refs = '' | split: '' -%}
+
+      {% for post in site.posts %}
+        {%- comment -%} Skip if we've already shown this post (by ref) {%- endcomment -%}
+        {%- if seen_refs contains post.ref -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        {%- assign seen_refs = seen_refs | push: post.ref -%}
+
+        {%- comment -%}
+          For posts with both languages, prefer user's language
+          If only one language exists, show that one
+        {%- endcomment -%}
+        {%- assign has_en = false -%}
+        {%- assign has_zh = false -%}
+        {%- assign en_post = nil -%}
+        {%- assign zh_post = nil -%}
+
+        {%- for p in site.posts -%}
+          {%- if p.ref == post.ref -%}
+            {%- if p.lang == 'en' -%}
+              {%- assign has_en = true -%}
+              {%- assign en_post = p -%}
+            {%- elsif p.lang == 'zh' -%}
+              {%- assign has_zh = true -%}
+              {%- assign zh_post = p -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Decide which version to show {%- endcomment -%}
+        {%- if has_en and has_zh -%}
+          {%- if user_lang == 'zh' -%}
+            {%- assign display_post = zh_post -%}
+          {%- else -%}
+            {%- assign display_post = en_post -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign display_post = post -%}
+        {%- endif -%}
+
+        <li class="post-item list-none">
+          <a href="{{ display_post.url | relative_url }}" class="post-card terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot red"></span>
+              <span class="terminal-dot yellow"></span>
+              <span class="terminal-dot green"></span>
+              <span class="text-gray-500 text-xs ml-2 font-mono">
+                {% if display_post.lang == 'zh' %}{{ t.badges.chinese }}{% else %}{{ t.badges.english }}{% endif %}
+              </span>
+            </div>
+            <div class="pt-4">
+              <h3 class="post-card-title">{{ display_post.title }}</h3>
+              <div class="post-card-meta">
+                <time datetime="{{ display_post.date | date: '%Y-%m-%d' }}">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  {{ display_post.date | date: "%b %d, %Y" }}
+                </time>
+                {% assign words = display_post.content | number_of_words %}
+                {% assign read_time = words | divided_by: 200 %}
+                <span class="read-time">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  {% if read_time > 0 %}{{ read_time }} {{ t.post.read_time }}{% else %}1 {{ t.post.read_time }}{% endif %}
+                </span>
+              </div>
+              {% if display_post.description %}
+                <p class="post-card-excerpt">{{ display_post.description }}</p>
+              {% endif %}
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="terminal-window p-8 text-center">
+      <p class="font-mono text-sm text-gray-500">
+        <span class="text-yellow-500">{{ t.common.warning }}</span> {{ t.hero.no_posts }}
+      </p>
+    </div>
+  {% endif %}
+</section>
