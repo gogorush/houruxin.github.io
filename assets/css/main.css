@@ -574,38 +574,70 @@
   .terminal-dot.yellow { background: #ffbd2e; }
   .terminal-dot.green { background: #27c93f; }
 
-  /* Post Content */
+  /* Post Content - Optimized Typography */
   .post-content {
     max-width: 720px;
     margin: 0 auto;
+    font-size: var(--text-base);
+    line-height: 1.8;
+  }
+
+  /* Apply Noto Sans SC for Chinese content */
+  html[lang="zh"] .post-content {
+    font-family: 'Noto Sans SC', var(--font-sans);
   }
 
   .post-content h1,
   .post-content h2,
-  .post-content h3 {
+  .post-content h3,
+  .post-content h4 {
     margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
     font-family: var(--font-mono);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text-primary);
+  }
+
+  .post-content h1 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
   }
 
   .post-content h2 {
+    font-size: var(--text-2xl);
     padding-bottom: var(--space-2);
     border-bottom: 1px solid var(--color-border-primary);
+    letter-spacing: -0.015em;
   }
 
   .post-content h2::before {
     content: '# ';
-    color: var(--color-comment);
-    font-weight: 400;
+    color: var(--color-success);
+    font-weight: 600;
+  }
+
+  .post-content h3 {
+    font-size: var(--text-xl);
+    letter-spacing: -0.01em;
   }
 
   .post-content h3::before {
     content: '## ';
-    color: var(--color-comment);
-    font-weight: 400;
+    color: var(--color-success);
+    font-weight: 600;
   }
 
   .post-content p {
     margin-bottom: var(--space-6);
+    color: var(--color-text-secondary);
+    word-wrap: break-word;
+    text-wrap: pretty;
+  }
+
+  /* Better paragraph spacing for Chinese */
+  html[lang="zh"] .post-content p {
+    line-height: 2;
   }
 
   .post-content ul,
@@ -615,21 +647,105 @@
   }
 
   .post-content li {
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
     color: var(--color-text-secondary);
+    line-height: 1.8;
+  }
+
+  html[lang="zh"] .post-content li {
+    line-height: 2;
   }
 
   .post-content li::marker {
     color: var(--color-accent);
   }
 
+  .post-content ul > li {
+    list-style-type: none;
+    position: relative;
+  }
+
+  .post-content ul > li::before {
+    content: '•';
+    color: var(--color-accent);
+    position: absolute;
+    left: -1.2em;
+    font-weight: bold;
+  }
+
   .post-content a {
+    color: var(--color-accent);
     border-bottom: 1px solid var(--color-border-accent);
+    text-decoration: none;
+    transition: all var(--transition-fast);
   }
 
   .post-content a:hover {
-    background: var(--color-bg-tertiary);
+    color: var(--color-accent-hover);
     border-bottom-color: var(--color-accent);
+    background: var(--color-bg-tertiary);
+  }
+
+  /* Strong and Emphasis */
+  .post-content strong {
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .post-content em {
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  /* Inline code */
+  .post-content :not(pre) > code {
+    background: var(--color-bg-tertiary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-keyword);
+    word-break: break-word;
+  }
+
+  /* Images with better styling */
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border-primary);
+    margin: var(--space-8) 0;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Image captions */
+  .post-content + p[style*="text-align: center"] {
+    font-size: var(--text-sm);
+    color: var(--color-text-tertiary);
+    margin-top: -1.5rem;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Horizontal rule */
+  .post-content hr {
+    border: none;
+    border-top: 1px solid var(--color-border-primary);
+    margin: var(--space-12) 0;
+  }
+
+  /* Blockquotes */
+  .post-content blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-8) 0;
+    background: var(--color-bg-secondary);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    color: var(--color-text-secondary);
+  }
+
+  .post-content blockquote p {
+    margin-bottom: 0;
   }
 
   /* Buttons */

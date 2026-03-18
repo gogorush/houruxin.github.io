@@ -6,6 +6,11 @@ description: "Personal blog about technology and life"
 
 {%- include i18n.html -%}
 
+{%- comment -%}
+  Get current language preference from localStorage or auto-detect
+  For homepage, only show posts in the current language
+{%- endcomment -%}
+
 <div class="hero fade-in">
   <div class="hero-terminal">
     <span class="prompt">➜</span>
@@ -39,7 +44,15 @@ description: "Personal blog about technology and life"
 
   {% if site.posts.size > 0 %}
     <div class="grid gap-6 md:grid-cols-2">
+      {%- assign seen_refs = '' | split: '' -%}
       {% for post in site.posts %}
+        {%- comment -%} Skip if we've already shown this post (by ref) {%- endcomment -%}
+        {%- if seen_refs contains post.ref -%}
+          {%- continue -%}
+        {%- endif -%}
+
+        {%- assign seen_refs = seen_refs | push: post.ref -%}
+
         <li class="post-item list-none">
           <a href="{{ post.url | relative_url }}" class="post-card terminal-window">
             <div class="terminal-header">

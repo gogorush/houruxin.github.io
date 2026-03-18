@@ -90,7 +90,6 @@
 </style>
 
 <script>
-  // Language switcher logic
   (function() {
     const toggle = document.getElementById('lang-toggle');
     const dropdown = document.getElementById('lang-dropdown');
@@ -123,8 +122,7 @@
     // Store preference
     localStorage.setItem('preferred_lang', lang);
 
-    // Find translation of current page
-    const currentPath = window.location.pathname;
+    // Get current page language from html tag
     const currentLang = document.documentElement.lang || 'en';
 
     if (lang === currentLang) {
@@ -132,33 +130,30 @@
       return;
     }
 
-    // For posts: replace .en. with .zh. and vice versa
+    const currentPath = window.location.pathname;
     let newPath = currentPath;
-    if (currentLang === 'en') {
-      newPath = currentPath.replace('.en.', '.zh.');
+
+    // Handle post URLs: /posts/welcome.en/ -> /posts/welcome.zh/
+    if (currentPath.includes('/posts/')) {
+      if (currentLang === 'en') {
+        newPath = currentPath.replace('.en/', '.zh/');
+      } else {
+        newPath = currentPath.replace('.zh/', '.en/');
+      }
     } else {
-      newPath = currentPath.replace('.zh.', '.en.');
+      // For non-post pages, just reload with lang preference
+      window.location.reload();
+      return;
     }
 
-    // Check if translated page exists by trying to load it
-    fetch(newPath, { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = newPath;
-        } else {
-          // No translation exists, just update UI
-          document.getElementById('lang-dropdown').classList.add('hidden');
-        }
-      })
-      .catch(() => {
-        document.getElementById('lang-dropdown').classList.add('hidden');
-      });
+    // Navigate to translated page
+    window.location.href = newPath;
   }
 
   // Auto-detect language on first visit
-  (function autoDetectLang() {
+  (function() {
     const stored = localStorage.getItem('preferred_lang');
-    if (stored) return; // User has preference
+    if (stored) return;
 
     const browserLang = navigator.language || navigator.userLanguage;
     const preferred = browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
