@@ -3,13 +3,26 @@ layout: default
 type: article
 ---
 
-<article class="post max-w-prose mx-auto">
-  <header class="mb-8">
-    <h1 class="text-3xl font-bold mb-4">{{ page.title }}</h1>
-    {% include post-meta.html %}
+<article class="post fade-in">
+  <header class="mb-12 text-center">
+    <div class="flex items-center justify-center gap-4 mb-6">
+      {% include post-meta.html %}
+    </div>
+    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-balance">{{ page.title }}</h1>
   </header>
 
-  <div class="prose prose-lg text-lg leading-relaxed">
+  <div class="post-content">
     {{ content }}
   </div>
+
+  <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <a href="{{ '/' | relative_url }}" class="btn btn-secondary">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Back to all posts
+      </a>
+    </div>
+  </footer>
 </article>

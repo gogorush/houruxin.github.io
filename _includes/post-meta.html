@@ -1,13 +1,26 @@
 {% assign words = content | number_of_words %}
 {% assign read_time = words | divided_by: 200 %}
 
-<div class="post-meta text-gray-600 text-sm">
-  <time datetime="{{ page.date | date: '%Y-%m-%d' }}">
+<div class="flex items-center gap-4 text-sm text-gray-500">
+  <time datetime="{{ page.date | date: '%Y-%m-%d' }}" class="flex items-center gap-1">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+    </svg>
     {{ page.date | date: "%B %d, %Y" }}
   </time>
   {% if read_time > 0 %}
-    &bull; {{ read_time }} min read
+    <span class="flex items-center gap-1">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      {{ read_time }} min read
+    </span>
   {% else %}
-    &bull; 1 min read
+    <span class="flex items-center gap-1">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      1 min read
+    </span>
   {% endif %}
 </div>

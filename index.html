@@ -1,35 +1,52 @@
 ---
 layout: home
 title: Welcome
-description: "Welcome to my personal blog about technology and life"
+description: "Personal blog about technology and life"
 ---
-<div class="hero text-center py-16">
-  <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to My Blog</h1>
-  <p class="text-lg text-gray-600">
-    A place to share thoughts on technology, life, and everything in between.
-  </p>
+
+<div class="hero fade-in">
+  <div class="container">
+    <h1 class="hero-title">
+      Welcome to My Blog
+    </h1>
+    <p class="hero-description text-balance">
+      A place to share thoughts on technology, life, and everything in between.
+      Join me as I explore ideas at the intersection of code and creativity.
+    </p>
+  </div>
 </div>
 
-<section class="posts mt-16">
-  <h2 class="text-2xl font-semibold text-gray-800 mb-6">Posts</h2>
+<section class="posts mt-16 pb-16">
+  <h2 class="section-heading">Posts</h2>
   {% if site.posts.size > 0 %}
-    <ul class="space-y-6">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {% for post in site.posts %}
-        <li class="post-item">
-          <article class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">
-              <a href="{{ post.url | relative_url }}" class="hover:text-blue-600 transition-colors">
-                {{ post.title }}
-              </a>
-            </h3>
-            <time class="text-gray-500 text-sm" datetime="{{ post.date | date: '%Y-%m-%d' }}">
-              {{ post.date | date: "%B %d, %Y" }}
-            </time>
-          </article>
+        <li class="post-item list-none">
+          <a href="{{ post.url | relative_url }}" class="post-card">
+            <h3 class="post-card-title">{{ post.title }}</h3>
+            <div class="post-card-meta">
+              <time datetime="{{ post.date | date: '%Y-%m-%d' }}">
+                {{ post.date | date: "%b %d, %Y" }}
+              </time>
+              {% assign words = post.content | number_of_words %}
+              {% assign read_time = words | divided_by: 200 %}
+              <span class="read-time">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {% if read_time > 0 %}{{ read_time }} min{% else %}1 min{% endif %} read
+              </span>
+            </div>
+            {% if post.description %}
+              <p class="post-card-excerpt">{{ post.description }}</p>
+            {% endif %}
+          </a>
         </li>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <p class="text-gray-600">No posts yet. Check back soon!</p>
+    <div class="text-center py-12">
+      <p class="text-gray-600 text-lg">No posts yet. Check back soon!</p>
+    </div>
   {% endif %}
 </section>

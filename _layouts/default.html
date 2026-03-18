@@ -3,17 +3,34 @@
 <head>
   {% include head.html %}
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="bg-white text-gray-900 antialiased flex flex-col min-h-screen">
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
   <header class="bg-white shadow">
     {% include header.html %}
   </header>
 
-  <main class="container max-w-7xl mx-auto px-4 py-8">
+  <main id="main-content" class="container max-w-7xl mx-auto px-4 py-8 flex-grow">
     {{ content }}
   </main>
 
   <footer class="bg-gray-50 border-t mt-auto">
     {% include footer.html %}
   </footer>
+
+  <script>
+    // Scroll progress indicator
+    window.addEventListener('scroll', function() {
+      var winScroll = document.documentElement.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = (winScroll / height) * 100;
+      var progressEl = document.getElementById('scroll-progress');
+      if (progressEl) {
+        progressEl.style.width = scrolled + '%';
+      }
+    });
+  </script>
 </body>
 </html>
