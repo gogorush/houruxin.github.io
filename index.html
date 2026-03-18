@@ -6,11 +6,6 @@ description: "Personal blog about technology and life"
 
 {%- include i18n.html -%}
 
-{%- comment -%}
-  Get current language preference from localStorage or auto-detect
-  For homepage, only show posts in the current language
-{%- endcomment -%}
-
 <div class="hero fade-in">
   <div class="hero-terminal">
     <span class="prompt">➜</span>
@@ -44,7 +39,13 @@ description: "Personal blog about technology and life"
 
   {% if site.posts.size > 0 %}
     <div class="grid gap-6 md:grid-cols-2">
+      {%- comment -%}
+        Filter posts: show only one language version per post (by ref)
+        Prefer the user's language preference, fallback to English
+      {%- endcomment -%}
+      {%- assign user_lang = 'en' -%}
       {%- assign seen_refs = '' | split: '' -%}
+
       {% for post in site.posts %}
         {%- comment -%} Skip if we've already shown this post (by ref) {%- endcomment -%}
         {%- if seen_refs contains post.ref -%}
@@ -53,26 +54,58 @@ description: "Personal blog about technology and life"
 
         {%- assign seen_refs = seen_refs | push: post.ref -%}
 
+        {%- comment -%}
+          For posts with both languages, prefer user's language
+          If only one language exists, show that one
+        {%- endcomment -%}
+        {%- assign has_en = false -%}
+        {%- assign has_zh = false -%}
+        {%- assign en_post = nil -%}
+        {%- assign zh_post = nil -%}
+
+        {%- for p in site.posts -%}
+          {%- if p.ref == post.ref -%}
+            {%- if p.lang == 'en' -%}
+              {%- assign has_en = true -%}
+              {%- assign en_post = p -%}
+            {%- elsif p.lang == 'zh' -%}
+              {%- assign has_zh = true -%}
+              {%- assign zh_post = p -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment -%} Decide which version to show {%- endcomment -%}
+        {%- if has_en and has_zh -%}
+          {%- if user_lang == 'zh' -%}
+            {%- assign display_post = zh_post -%}
+          {%- else -%}
+            {%- assign display_post = en_post -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign display_post = post -%}
+        {%- endif -%}
+
         <li class="post-item list-none">
-          <a href="{{ post.url | relative_url }}" class="post-card terminal-window">
+          <a href="{{ display_post.url | relative_url }}" class="post-card terminal-window">
             <div class="terminal-header">
               <span class="terminal-dot red"></span>
               <span class="terminal-dot yellow"></span>
               <span class="terminal-dot green"></span>
               <span class="text-gray-500 text-xs ml-2 font-mono">
-                {% if post.lang == 'zh' %}{{ t.badges.chinese }}{% else %}{{ t.badges.english }}{% endif %}
+                {% if display_post.lang == 'zh' %}{{ t.badges.chinese }}{% else %}{{ t.badges.english }}{% endif %}
               </span>
             </div>
             <div class="pt-4">
-              <h3 class="post-card-title">{{ post.title }}</h3>
+              <h3 class="post-card-title">{{ display_post.title }}</h3>
               <div class="post-card-meta">
-                <time datetime="{{ post.date | date: '%Y-%m-%d' }}">
+                <time datetime="{{ display_post.date | date: '%Y-%m-%d' }}">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                   </svg>
-                  {{ post.date | date: "%b %d, %Y" }}
+                  {{ display_post.date | date: "%b %d, %Y" }}
                 </time>
-                {% assign words = post.content | number_of_words %}
+                {% assign words = display_post.content | number_of_words %}
                 {% assign read_time = words | divided_by: 200 %}
                 <span class="read-time">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,8 +114,8 @@ description: "Personal blog about technology and life"
                   {% if read_time > 0 %}{{ read_time }} {{ t.post.read_time }}{% else %}1 {{ t.post.read_time }}{% endif %}
                 </span>
               </div>
-              {% if post.description %}
-                <p class="post-card-excerpt">{{ post.description }}</p>
+              {% if display_post.description %}
+                <p class="post-card-excerpt">{{ display_post.description }}</p>
               {% endif %}
             </div>
           </a>
