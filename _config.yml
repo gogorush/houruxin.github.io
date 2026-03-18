@@ -3,7 +3,13 @@ description: "Personal blog about technology and life"
 url: "https://gogorush.github.io"
 baseurl: ""
 
-# Permalink structure - SET BEFORE FIRST POST
+# Language Settings
+default_lang: en
+languages:
+  - en
+  - zh
+
+# Permalink structure
 permalink: /posts/:title/
 
 # Build settings

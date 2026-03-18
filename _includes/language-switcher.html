@@ -1,0 +1,167 @@
+{%- comment -%}
+  Language Switcher Component
+  Displays current language and allows switching between EN/中文
+{%- endcomment -%}
+
+<div class="lang-switcher">
+  <button class="lang-btn" id="lang-toggle" aria-label="Switch language">
+    <span class="lang-current">{{ page.lang | default: 'en' | upcase }}</span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </button>
+  <div class="lang-dropdown hidden" id="lang-dropdown">
+    <button class="lang-option {% if page.lang == 'en' %}active{% endif %}" data-lang="en">
+      English
+    </button>
+    <button class="lang-option {% if page.lang == 'zh' %}active{% endif %}" data-lang="zh">
+      中文
+    </button>
+  </div>
+</div>
+
+<style>
+  .lang-switcher {
+    position: relative;
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .lang-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.25rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    min-width: 100px;
+    overflow: hidden;
+  }
+
+  .lang-dropdown.hidden {
+    display: none;
+  }
+
+  .lang-option {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .lang-option:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+  }
+
+  .lang-option.active {
+    background: var(--color-bg-tertiary);
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  // Language switcher logic
+  (function() {
+    const toggle = document.getElementById('lang-toggle');
+    const dropdown = document.getElementById('lang-dropdown');
+    const options = dropdown.querySelectorAll('.lang-option');
+
+    if (!toggle || !dropdown) return;
+
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      dropdown.classList.add('hidden');
+    });
+
+    // Handle language selection
+    options.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = option.dataset.lang;
+        switchLanguage(lang);
+      });
+    });
+  })();
+
+  function switchLanguage(lang) {
+    // Store preference
+    localStorage.setItem('preferred_lang', lang);
+
+    // Find translation of current page
+    const currentPath = window.location.pathname;
+    const currentLang = document.documentElement.lang || 'en';
+
+    if (lang === currentLang) {
+      document.getElementById('lang-dropdown').classList.add('hidden');
+      return;
+    }
+
+    // For posts: replace .en. with .zh. and vice versa
+    let newPath = currentPath;
+    if (currentLang === 'en') {
+      newPath = currentPath.replace('.en.', '.zh.');
+    } else {
+      newPath = currentPath.replace('.zh.', '.en.');
+    }
+
+    // Check if translated page exists by trying to load it
+    fetch(newPath, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = newPath;
+        } else {
+          // No translation exists, just update UI
+          document.getElementById('lang-dropdown').classList.add('hidden');
+        }
+      })
+      .catch(() => {
+        document.getElementById('lang-dropdown').classList.add('hidden');
+      });
+  }
+
+  // Auto-detect language on first visit
+  (function autoDetectLang() {
+    const stored = localStorage.getItem('preferred_lang');
+    if (stored) return; // User has preference
+
+    const browserLang = navigator.language || navigator.userLanguage;
+    const preferred = browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    localStorage.setItem('preferred_lang', preferred);
+  })();
+</script>

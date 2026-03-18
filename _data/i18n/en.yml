@@ -1,0 +1,33 @@
+# English UI Translations
+
+nav:
+  home: "home"
+  about: "about"
+  all_posts: "All Posts"
+
+footer:
+  all_rights: "All rights reserved."
+  rss_feed: "RSS Feed"
+  built_with: "Built with Jekyll & GitHub Pages"
+
+post:
+  published: "published"
+  read_time: "min read"
+  share: "Share:"
+  copy_link: "Copy link"
+  back_to_posts: "Back to posts"
+  language: "Language"
+
+badges:
+  english: "EN"
+  chinese: "中文"
+
+hero:
+  initializing: "// initializing blog..."
+  view_posts: "View all posts"
+  latest_posts: "Latest Posts"
+  no_posts: "No posts yet. Check back soon!"
+
+common:
+  warning: "warning:"
+  file_type: ".md"

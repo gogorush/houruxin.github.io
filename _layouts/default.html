@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ page.lang | default: site.default_lang | default: 'en' }}">
 <head>
   {% include head.html %}
 </head>
@@ -16,6 +16,7 @@
 
   {% include footer.html %}
 
+  <script src="{{ '/assets/js/lang-switcher.js' | relative_url }}"></script>
   <script>
     // Scroll progress indicator
     window.addEventListener('scroll', function() {

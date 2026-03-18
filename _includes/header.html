@@ -7,35 +7,40 @@
         <span class="text-gray-500">.io</span>
       </a>
 
-      <nav class="header-nav hidden md:flex">
+      <nav class="header-nav hidden md:flex items-center gap-6">
         <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">
-          <span class="text-gray-500">./</span>home
+          <span class="text-gray-500">./</span>{{ t.nav.home }}
         </a>
         <a href="{{ '/about' | relative_url }}" class="{% if page.url contains '/about' %}active{% endif %}">
-          <span class="text-gray-500">./</span>about
+          <span class="text-gray-500">./</span>{{ t.nav.about }}
         </a>
       </nav>
 
-      <!-- Mobile menu button -->
-      <button
-        class="md:hidden menu-btn"
-        aria-label="Toggle menu"
-        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+      <!-- Language Switcher & Mobile menu -->
+      <div class="flex items-center gap-3">
+        {% include language-switcher.html %}
+
+        <!-- Mobile menu button -->
+        <button
+          class="md:hidden menu-btn"
+          aria-label="Toggle menu"
+          onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden mobile-menu">
       <nav class="flex flex-col gap-1">
         <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">
-          <span class="text-gray-500">./</span>home
+          <span class="text-gray-500">./</span>{{ t.nav.home }}
         </a>
         <a href="{{ '/about' | relative_url }}" class="{% if page.url contains '/about' %}active{% endif %}">
-          <span class="text-gray-500">./</span>about
+          <span class="text-gray-500">./</span>{{ t.nav.about }}
         </a>
       </nav>
     </div>

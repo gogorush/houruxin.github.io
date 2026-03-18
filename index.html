@@ -1,14 +1,16 @@
 ---
-layout: home
+layout: default
 title: Welcome
 description: "Personal blog about technology and life"
 ---
+
+{%- include i18n.html -%}
 
 <div class="hero fade-in">
   <div class="hero-terminal">
     <span class="prompt">➜</span>
     <span>~</span>
-    <span class="text-gray-500">// initializing blog...</span>
+    <span class="text-gray-500">{{ t.hero.initializing }}</span>
   </div>
 
   <h1 class="hero-title">
@@ -21,7 +23,7 @@ description: "Personal blog about technology and life"
   </p>
 
   <a href="#posts" class="hero-cta">
-    <span>View all posts</span>
+    <span>{{ t.hero.view_posts }}</span>
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </svg>
@@ -29,11 +31,11 @@ description: "Personal blog about technology and life"
 </div>
 
 <div class="section-divider">
-  <span class="text-gray-500">// posts</span>
+  <span class="text-gray-500">// {{ t.hero.latest_posts | downcase }}</span>
 </div>
 
 <section id="posts" class="pb-16">
-  <h2 class="section-heading">Latest Posts</h2>
+  <h2 class="section-heading">{{ t.hero.latest_posts }}</h2>
 
   {% if site.posts.size > 0 %}
     <div class="grid gap-6 md:grid-cols-2">
@@ -44,7 +46,9 @@ description: "Personal blog about technology and life"
               <span class="terminal-dot red"></span>
               <span class="terminal-dot yellow"></span>
               <span class="terminal-dot green"></span>
-              <span class="text-gray-500 text-xs ml-2 font-mono">post</span>
+              <span class="text-gray-500 text-xs ml-2 font-mono">
+                {% if post.lang == 'zh' %}{{ t.badges.chinese }}{% else %}{{ t.badges.english }}{% endif %}
+              </span>
             </div>
             <div class="pt-4">
               <h3 class="post-card-title">{{ post.title }}</h3>
@@ -61,7 +65,7 @@ description: "Personal blog about technology and life"
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
-                  {% if read_time > 0 %}{{ read_time }} min{% else %}1 min{% endif %} read
+                  {% if read_time > 0 %}{{ read_time }} {{ t.post.read_time }}{% else %}1 {{ t.post.read_time }}{% endif %}
                 </span>
               </div>
               {% if post.description %}
@@ -75,7 +79,7 @@ description: "Personal blog about technology and life"
   {% else %}
     <div class="terminal-window p-8 text-center">
       <p class="font-mono text-sm text-gray-500">
-        <span class="text-yellow-500">warning:</span> No posts yet. Check back soon!
+        <span class="text-yellow-500">{{ t.common.warning }}</span> {{ t.hero.no_posts }}
       </p>
     </div>
   {% endif %}

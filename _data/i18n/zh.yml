@@ -1,0 +1,33 @@
+# Chinese UI Translations
+
+nav:
+  home: "首页"
+  about: "关于"
+  all_posts: "全部文章"
+
+footer:
+  all_rights: "版权所有."
+  rss_feed: "RSS 订阅"
+  built_with: "使用 Jekyll & GitHub Pages 构建"
+
+post:
+  published: "已发布"
+  read_time: "分钟阅读"
+  share: "分享:"
+  copy_link: "复制链接"
+  back_to_posts: "返回文章列表"
+  language: "语言"
+
+badges:
+  english: "英文"
+  chinese: "中文"
+
+hero:
+  initializing: "// 初始化博客中..."
+  view_posts: "查看所有文章"
+  latest_posts: "最新文章"
+  no_posts: "还没有文章，请稍后再来!"
+
+common:
+  warning: "警告:"
+  file_type: ".md"
