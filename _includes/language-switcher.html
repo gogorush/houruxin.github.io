@@ -87,47 +87,61 @@
 
 <script>
   (function() {
-    const toggle = document.getElementById('lang-toggle');
-    const dropdown = document.getElementById('lang-dropdown');
-    const currentDisplay = document.getElementById('lang-current-display');
-    const options = dropdown.querySelectorAll('.lang-option');
+    // Wait for DOM to be ready
+    function initLangSwitcher() {
+      var toggle = document.getElementById('lang-toggle');
+      var dropdown = document.getElementById('lang-dropdown');
+      var currentDisplay = document.getElementById('lang-current-display');
+      var options = dropdown ? dropdown.querySelectorAll('.lang-option') : [];
 
-    if (!toggle || !dropdown) return;
+      if (!toggle || !dropdown) return;
 
-    // Update active state based on current page language
-    const currentLang = document.documentElement.lang || 'en';
-    if (currentDisplay) {
-      currentDisplay.textContent = currentLang.toUpperCase();
-    }
-    options.forEach(opt => {
-      if (opt.dataset.lang === currentLang) {
-        opt.classList.add('active');
-      } else {
-        opt.classList.remove('active');
+      // Update active state based on current page language
+      var currentLang = document.documentElement.lang || 'en';
+      if (currentDisplay) {
+        currentDisplay.textContent = currentLang.toUpperCase();
       }
-    });
 
-    // Toggle dropdown on click
-    toggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      dropdown.classList.toggle('hidden');
-    });
+      for (var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        if (opt.dataset.lang === currentLang) {
+          opt.classList.add('active');
+        } else {
+          opt.classList.remove('active');
+        }
+      }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function() {
-      dropdown.classList.add('hidden');
-    });
-
-    // Handle language selection
-    options.forEach(function(option) {
-      option.addEventListener('click', function(e) {
+      // Toggle dropdown on click
+      toggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        const lang = option.dataset.lang;
-        switchLanguage(lang);
+        dropdown.classList.toggle('hidden');
       });
-    });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        dropdown.classList.add('hidden');
+      });
+
+      // Handle language selection
+      for (var i = 0; i < options.length; i++) {
+        (function(option) {
+          option.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var lang = option.dataset.lang;
+            switchLanguage(lang);
+          });
+        })(options[i]);
+      }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLangSwitcher);
+    } else {
+      initLangSwitcher();
+    }
   })();
 
   function switchLanguage(lang) {
@@ -135,19 +149,20 @@
     localStorage.setItem('preferred_lang', lang);
 
     // Get current page language
-    const currentLang = document.documentElement.lang || 'en';
+    var currentLang = document.documentElement.lang || 'en';
 
     // Already on target language
     if (lang === currentLang) {
-      document.getElementById('lang-dropdown').classList.add('hidden');
+      var dropdown = document.getElementById('lang-dropdown');
+      if (dropdown) dropdown.classList.add('hidden');
       return;
     }
 
-    const currentPath = window.location.pathname;
+    var currentPath = window.location.pathname;
 
     // Handle post URLs: /posts/welcome.en/ -> /posts/welcome.zh/
     if (currentPath.indexOf('/posts/') !== -1) {
-      let newPath = currentPath;
+      var newPath = currentPath;
       if (currentLang === 'en') {
         newPath = currentPath.replace('.en/', '.zh/');
       } else {
