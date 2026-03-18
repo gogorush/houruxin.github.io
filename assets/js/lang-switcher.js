@@ -41,22 +41,63 @@
   function getTranslatedUrl(currentLang, targetLang) {
     const currentPath = window.location.pathname;
 
+    // Handle homepage: /index.en/ <-> /index.zh/
+    if (currentPath === '/index.en/' || currentPath === '/index.en.html' || currentPath === '/' || currentPath === '/index.html') {
+      if (targetLang === 'zh') {
+        return '/index.zh/';
+      } else if (targetLang === 'en') {
+        return '/index.en/';
+      }
+    }
+    if (currentPath === '/index.zh/' || currentPath === '/index.zh.html') {
+      if (targetLang === 'en') {
+        return '/index.en/';
+      }
+    }
+
     // For posts: swap .en. <-> .zh.
     let newPath = currentPath;
     if (currentLang === 'en' && targetLang === 'zh') {
-      newPath = currentPath.replace('.en.', '.zh.');
+      newPath = currentPath.replace('.en/', '.zh/');
     } else if (currentLang === 'zh' && targetLang === 'en') {
-      newPath = currentPath.replace('.zh.', '.en.');
+      newPath = currentPath.replace('.zh/', '.en/');
     }
 
     return newPath;
   }
 
   /**
+   * Get current language from URL (more reliable than HTML lang attribute)
+   */
+  function getCurrentLangFromUrl() {
+    const path = window.location.pathname;
+
+    // Homepage: /index.en/ or /index.zh/
+    if (path.indexOf('/index.zh/') !== -1 || path.indexOf('/index.zh.html') !== -1) {
+      return 'zh';
+    }
+    if (path.indexOf('/index.en/') !== -1 || path.indexOf('/index.en.html') !== -1) {
+      return 'en';
+    }
+
+    // Posts: /posts/*.en/ or /posts/*.zh/
+    if (path.indexOf('.zh/') !== -1 || path.indexOf('.zh.html') !== -1) {
+      return 'zh';
+    }
+    if (path.indexOf('.en/') !== -1 || path.indexOf('.en.html') !== -1) {
+      return 'en';
+    }
+
+    // Fall back to HTML lang attribute
+    const htmlLang = document.documentElement.lang || DEFAULT_LANG;
+    return (htmlLang === 'zh' || htmlLang === 'en') ? htmlLang : DEFAULT_LANG;
+  }
+
+  /**
    * Switch to target language
    */
   function switchLanguage(targetLang) {
-    const currentLang = document.documentElement.lang || DEFAULT_LANG;
+    const currentLang = getCurrentLangFromUrl();
 
     // Already on target language
     if (targetLang === currentLang) {

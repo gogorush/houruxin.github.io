@@ -138,23 +138,30 @@
     }
 
     function getCurrentLang() {
-      // Check page lang attribute first
+      var path = window.location.pathname;
+
+      // Check URL patterns first (more reliable than HTML lang attribute)
+      // Homepage: /index.en/ or /index.zh/
+      if (path.indexOf('/index.zh/') !== -1 || path.indexOf('/index.zh.html') !== -1) {
+        return 'zh';
+      }
+      if (path.indexOf('/index.en/') !== -1 || path.indexOf('/index.en.html') !== -1) {
+        return 'en';
+      }
+
+      // Posts: /posts/*.en/ or /posts/*.zh/
+      if (path.indexOf('.zh/') !== -1 || path.indexOf('.zh.html') !== -1) {
+        return 'zh';
+      }
+      if (path.indexOf('.en/') !== -1 || path.indexOf('.en.html') !== -1) {
+        return 'en';
+      }
+
+      // Fall back to HTML lang attribute
       var htmlLang = document.documentElement.lang || 'en';
       if (htmlLang !== 'en' && htmlLang !== 'zh') {
         htmlLang = 'en';
       }
-
-      // Check if we're on Chinese homepage
-      var path = window.location.pathname;
-      if (path.indexOf('/index.zh.html') !== -1 || path.indexOf('index.zh') !== -1) {
-        return 'zh';
-      }
-
-      // Check if we're on a Chinese post
-      if (path.indexOf('.zh/') !== -1 || path.indexOf('.zh.html') !== -1) {
-        return 'zh';
-      }
-
       return htmlLang;
     }
 
@@ -175,14 +182,14 @@
       var currentPath = window.location.pathname;
       var newPath = currentPath;
 
-      // Handle homepage: / or /index.html <-> /index.zh.html
-      if (currentPath === '/' || currentPath.indexOf('/index.html') !== -1 || currentPath.indexOf('/index.en.html') !== -1) {
+      // Handle homepage: /index.en/ <-> /index.zh/
+      if (currentPath === '/index.en/' || currentPath === '/index.en.html' || currentPath === '/' || currentPath === '/index.html') {
         if (lang === 'zh') {
-          newPath = '/index.zh.html';
+          newPath = '/index.zh/';
         }
-      } else if (currentPath.indexOf('/index.zh.html') !== -1) {
+      } else if (currentPath === '/index.zh/' || currentPath === '/index.zh.html') {
         if (lang === 'en') {
-          newPath = '/';
+          newPath = '/index.en/';
         }
       }
       // Handle post URLs: /posts/welcome.en/ -> /posts/welcome.zh/
